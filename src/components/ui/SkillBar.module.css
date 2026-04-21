@@ -1,0 +1,28 @@
+.item { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name { font-size: 0.875rem; color: var(--text2); }
+
+.level {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text3);
+}
+
+.track {
+  height: 3px;
+  background: var(--bg4);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--cyan));
+  border-radius: 2px;
+}

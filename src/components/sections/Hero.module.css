@@ -1,0 +1,146 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /* FIX: el hero ocupa todo el ancho del viewport.
+     El padding lateral reemplaza al max-width + margin auto
+     que estaba limitando el ancho a 1100px con márgenes laterales. */
+  width: 100%;
+  padding: 100px 2rem 4rem;
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* El contenido sí se limita a max-width internamente,
+   así el texto no se estira demasiado en pantallas grandes */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.glow {
+  position: absolute;
+  top: -200px;
+  left: -200px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  color: #a78bfa;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+  width: fit-content;
+}
+
+.pulse {
+  width: 6px;
+  height: 6px;
+  background: var(--cyan);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse { animation: none; }
+}
+
+.heading {
+  font-family: var(--font-head);
+  font-size: clamp(2.75rem, 8vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  margin-bottom: 1.25rem;
+  color: var(--text);
+}
+
+.nameGradient {
+  background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 40%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sub {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--text2);
+  max-width: 540px;
+  line-height: 1.75;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.actions {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+}
+
+.chip {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--text3);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  transition: all var(--transition);
+}
+
+.chip:hover {
+  border-color: var(--border-cyan);
+  color: var(--cyan);
+}
+
+.scroll {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text3);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.scrollLine {
+  width: 40px;
+  height: 1px;
+  background: var(--text3);
+}
+
+@media (max-width: 768px) {
+  .hero { padding: 90px 1.25rem 3rem; }
+}

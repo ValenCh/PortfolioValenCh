@@ -1,0 +1,71 @@
+.about {}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.bio {
+  color: var(--text2);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+  font-weight: 300;
+}
+
+.location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text3);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.statCard {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.25rem;
+  cursor: default;
+
+  /* FIX: la transición del borde la maneja CSS directamente.
+     var(--transition) = 0.22s — rápido y sigue al ratón al instante. */
+  transition: border-color var(--transition);
+}
+
+.statCard:hover {
+  border-color: var(--border-hover);
+}
+
+.statNum {
+  font-family: var(--font-head);
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--text), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.statLabel {
+  font-size: 0.78rem;
+  color: var(--text3);
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
