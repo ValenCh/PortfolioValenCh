@@ -42,11 +42,20 @@ export const experience = [
   {
     id: 2,
     role: 'Estudiante de Ingeniería en Sistemas',
-    company: 'Universidad — Buenos Aires',
+    company: 'UTN — Facultad Regional La Plata',
     period: '2023 — Presente',
     description:
       'Formación sólida en algorítmica, estructuras de datos, programación orientada a objetos, bases de datos y redes. Participación activa en proyectos académicos grupales.',
     tags: ['Algoritmos', 'POO', 'Bases de Datos', 'Redes'],
+  },
+    {
+    id: 3,
+    role: 'Curso de Desarrollo Web Frontend',
+    company: 'Coderhouse — Online',
+    period: '2022',
+    description:
+      'Curso intensivo de desarrollo web frontend con foco en React. Aprendizaje práctico a través de proyectos reales, cubriendo HTML, CSS, Sass, JavaScript y React.',
+    tags: ['React','JavaScript', 'SASS', 'CSS', 'HTML'],
   },
 ];
 
@@ -81,7 +90,7 @@ export const skillCategories = [
     colorVar: '--accent',
     skills: [
       { name: 'HTML / CSS', level: 90 },
-      { name: 'JavaScript', level: 85 },
+      { name: 'JavaScript', level: 65 },
       { name: 'React', level: 80 },
       { name: 'SASS', level: 75 },
     ],
@@ -91,10 +100,10 @@ export const skillCategories = [
     title: 'Backend & Lenguajes',
     colorVar: '--cyan',
     skills: [
-      { name: 'Python', level: 75 },
-      { name: 'Node.js', level: 60 },
-      { name: 'Java', level: 55 },
-      { name: 'C', level: 50 },
+      { name: 'Python', level: 55 },
+      { name: 'Node.js', level: 20 },
+      { name: 'Java', level: 25 },
+      { name: 'C', level: 30 },
     ],
   },
   {
@@ -102,10 +111,10 @@ export const skillCategories = [
     title: 'Herramientas',
     colorVar: '--green',
     skills: [
-      { name: 'Git / GitHub', level: 80 },
+      { name: 'Git / GitHub', level: 90 },
       { name: 'VS Code', level: 90 },
-      { name: 'Linux', level: 65 },
-      { name: 'Figma', level: 50 },
+      { name: 'Linux', level: 60 },
+      { name: 'Figma', level: 80 },
     ],
   },
 ];
@@ -133,13 +142,13 @@ export const projects = [
     id: 2,
     title: 'App Web — Proyecto personal',
     description:
-      'Actualizá esta descripción con tu proyecto real. Contá el problema que resuelve, las decisiones técnicas que tomaste y qué aprendiste.',
+      'Aplicación web desarrollada como proyecto personal para practicar habilidades de frontend. Incluye diseño responsivo y funcionalidades interactivas.',
     tags: ['html', 'css', 'JavaScript', 'SASS'],
     icon: '⚡',
     github: 'https://github.com/ValenCh',
     demo: 'https://hilarious-sundae-80c333.netlify.app/',
   },
-  {
+  /*{
     id: 3,
     title: 'Script Python — Automatización',
     description:
@@ -148,12 +157,12 @@ export const projects = [
     icon: '🐍',
     github: 'https://github.com/ValenCh',
     demo: null,
-  },
+  },*/
 ];
 
 export const stats = [
   { id: 1, value: '4°', label: 'Año de Ingeniería' },
   { id: 2, value: '3+', label: 'Proyectos personales' },
-  { id: 3, value: '5+', label: 'Tecnologías dominadas' },
+  { id: 3, value: '4+', label: 'Tecnologías dominadas' },
   { id: 4, value: '∞', label: 'Ganas de aprender' },
 ];
