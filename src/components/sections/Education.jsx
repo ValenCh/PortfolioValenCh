@@ -1,12 +1,14 @@
 import { motion } from 'framer-motion';
-import { education } from '../../data/portfolioData';
+import { usePortfolioData } from '../../data/portfolioData';
 import SectionTitle from '../ui/SectionTitle';
 import styles from './Education.module.css';
 
 export default function Education() {
+  const { education, ui } = usePortfolioData();
+
   return (
     <section id="education" className={`section ${styles.education}`}>
-      <SectionTitle tag="// educación" title="Formación" />
+      <SectionTitle tag={ui.education.tag} title={ui.education.title} />
       <div className={styles.grid}>
         {education.map((item, i) => (
           <motion.div

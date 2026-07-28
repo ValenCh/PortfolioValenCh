@@ -1,68 +1,104 @@
-.grid {
+.skills {}
+
+.showcase {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 2.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 3rem;
 }
 
 .category {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-premium);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  transition: border-color var(--transition);
 }
+.category:hover { border-color: var(--border-premium-hover); }
 
-.catHeader {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.25rem;
-}
-
-.catDot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
+.catHeader { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+.catDot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 .catTitle {
   font-family: var(--font-head);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: var(--text);
+  color: var(--text2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.skillList {
+.techGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+
+/* ── Tech card — ahora es un <button> ── */
+.techCard {
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  align-items: flex-start;
+  gap: 0.3rem;
+  padding: 0.9rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-premium);
+  background: rgba(255,255,255,0.015);
+  cursor: pointer;
+  transition: all var(--transition);
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
 }
+.techCard:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: var(--border-premium-hover);
+}
+
+.techCardSelected {
+  border-color: var(--brand-warm);
+  background: var(--brand-glow);
+  box-shadow: 0 0 0 1px rgba(243, 200, 146, 0.3) inset;
+}
+
+.techIcon { width: 18px; height: 18px; color: var(--text); flex-shrink: 0; transition: opacity var(--transition); }
+.techIcon svg { width: 100%; height: 100%; }
+
+.techName {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  transition: opacity var(--transition);
+}
+
+.techLevel { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text3); }
 
 .interests { margin-top: 0.5rem; }
 
 .interestLabel {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   color: var(--text3);
   font-family: var(--font-mono);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
+.chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 
 .chip {
-  background: rgba(6, 182, 212, 0.07);
-  border: 1px solid rgba(6, 182, 212, 0.22);
-  color: var(--cyan);
-  padding: 0.35rem 0.9rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
+  background: rgba(243, 200, 146, 0.05);
+  border: 1px solid rgba(243, 200, 146, 0.2);
+  color: var(--brand-warm);
+  padding: 0.3rem 0.9rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
   transition: all var(--transition);
+  cursor: default;
 }
-.chip:hover {
-  background: rgba(6, 182, 212, 0.14);
+.chip:hover { background: rgba(243, 200, 146, 0.09); }
+
+@media (max-width: 900px) { .showcase { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 580px) {
+  .showcase { grid-template-columns: 1fr; }
+  .techGrid { grid-template-columns: repeat(2, 1fr); }
 }
