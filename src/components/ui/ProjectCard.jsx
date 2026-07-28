@@ -101,13 +101,21 @@ export default function ProjectCard({ project, index, spanClass, isFiltering, is
       <h3 className={styles.title}>{project.title}</h3>
       <p className={styles.desc}>{project.description}</p>
 
-      <div className={styles.tags}>
-        {project.tags.map((tag, i) => (
-          <span key={tag} className={styles.tag}>
-            {i > 0 && <span className={styles.tagDot} aria-hidden="true" />}
-            {tag}
-          </span>
-        ))}
+      <div className={styles.footer}>
+        <div className={styles.tags}>
+          {project.tags.map((tag, i) => (
+            <span key={tag} className={styles.tag}>
+              {i > 0 && <span className={styles.tagDot} aria-hidden="true" />}
+              {tag}
+            </span>
+          ))}
+        </div>
+        <span className={styles.expandCue} aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M7 17L17 7" />
+            <path d="M8 7h9v9" />
+          </svg>
+        </span>
       </div>
     </motion.article>
   );

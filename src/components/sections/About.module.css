@@ -1,9 +1,9 @@
 .about {}
 
-/* ── Layout principal: bio + grilla de stats (flexbox) ── */
+/* ── Layout principal: bio + columna de stats (flexbox) ── */
 .bentoGrid {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 1.25rem;
 }
 
@@ -35,42 +35,46 @@
 
 /* ── Bio — más ancho, y ya no depende de la altura de los stats ── */
 .blockBio {
-  flex: 0 0 46%;
-  padding: 2.5rem;
+  flex: 0.5 0 46%;
+  padding: 3rem 2.5rem 3.5rem;
 }
 
-/* ── Grilla de stats — 2x2 compacta, con altura propia ── */
+/* ── Columna de stats — vertical, ocupa la altura del bio ── */
 .statsGrid {
   flex: 1;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 0.75rem;
-  align-content: start;
 }
 
 .statCard {
-  padding: 1.75rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1.75rem;
   cursor: default;
 }
 
-/* ── Interior de stat card ── */
+/* ── Interior de stat card — número y etiqueta en fila, fácil de escanear ── */
 .statInner {
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  align-items: baseline;
+  gap: 1rem;
 }
 
 .statNum {
   font-family: var(--font-head);
-  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-size: clamp(1.7rem, 2.6vw, 2.1rem);
   font-weight: 800;
   letter-spacing: -0.05em;
   color: #ffffff;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .statLabel {
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   color: var(--text2);
   line-height: 1.4;
   font-weight: 300;
@@ -114,5 +118,9 @@
 @media (max-width: 560px) {
   .statsGrid {
     gap: 0.6rem;
+  }
+  .statCard {
+    padding: 1.1rem 1.4rem;
+    justify-content: flex-start;
   }
 }

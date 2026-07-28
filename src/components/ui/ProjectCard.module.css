@@ -95,14 +95,39 @@
   font-weight: 300;
 }
 
-/* ── Tags minimalistas con separadores ── */
-.tags {
+/* ── Footer: tags + pista de expansión ── */
+.footer {
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+/* ── Tags minimalistas con separadores ── */
+.tags {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0;
+}
+
+.expandCue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: var(--text3);
+  opacity: 0.4;
+  transition: all 0.3s var(--transition-spring);
+}
+.card:hover .expandCue {
+  opacity: 1;
+  color: var(--brand-warm);
+  transform: translate(2px, -2px);
 }
 
 .tag {

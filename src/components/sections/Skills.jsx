@@ -81,22 +81,36 @@ const techIcons = {
       <circle cx="16" cy="15" r="4"/>
     </svg>
   ),
+  'Docker': (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <rect x="3" y="11" width="4" height="4"/>
+      <rect x="8" y="11" width="4" height="4"/>
+      <rect x="13" y="11" width="4" height="4"/>
+      <rect x="8" y="6" width="4" height="4"/>
+      <path d="M2 15c0 4 3.5 6 8 6 6 0 10-3 12-8-1.3.6-2.6.4-3.5-.5-1 1-2.5 1-3.5 0"/>
+    </svg>
+  ),
+  'Azure': (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <path d="M10 3L3 19h6l2-5"/>
+      <path d="M13 3L8 15h13L13 3z"/>
+    </svg>
+  ),
 };
 
-function levelOpacity(lvl) {
-  if (lvl >= 80) return 1;
-  if (lvl >= 55) return 0.65;
-  return 0.38;
+function tierOpacity(tier) {
+  // Learning-track items stay at full opacity — dimming would read as
+  // "weak", but this category is meant to signal direction, not deficiency.
+  if (tier === 'working') return 0.65;
+  return 1;
 }
 
 export default function Skills({ selectedSkill, onSelectSkill }) {
   const { skillCategories, interests, ui } = usePortfolioData();
   const { playClick } = useSoundEffects();
 
-  function levelLabel(lvl) {
-    if (lvl >= 80) return ui.skills.levels.advanced;
-    if (lvl >= 55) return ui.skills.levels.intermediate;
-    return ui.skills.levels.basic;
+  function tierLabel(tier) {
+    return ui.skills.levels[tier] || '';
   }
 
   function handleSkillClick(name) {
@@ -112,27 +126,31 @@ export default function Skills({ selectedSkill, onSelectSkill }) {
         {skillCategories.map((cat, ci) => (
           <motion.div
             key={cat.id}
-            className={styles.category}
+            className={`${styles.category} ${cat.isLearning ? styles.categoryLearning : ''}`}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ type: 'spring', stiffness: 90, damping: 22, delay: ci * 0.1 }}
           >
             <div className={styles.catHeader}>
-              <span className={styles.catDot} style={{ background: `var(${cat.colorVar})` }} aria-hidden="true" />
+              <span
+                className={styles.catDot}
+                style={cat.colorVar ? { background: `var(${cat.colorVar})` } : undefined}
+                aria-hidden="true"
+              />
               <span className={styles.catTitle}>{cat.title}</span>
             </div>
 
             <div className={styles.techGrid}>
               {cat.skills.map((skill, si) => {
                 const icon = techIcons[skill.name];
-                const opacity = levelOpacity(skill.level);
+                const opacity = tierOpacity(skill.tier);
                 const isSelected = selectedSkill === skill.name;
                 return (
                   <motion.button
                     key={skill.name}
                     type="button"
-                    className={`${styles.techCard} ${isSelected ? styles.techCardSelected : ''}`}
+                    className={`${styles.techCard} ${cat.isLearning ? styles.techCardLearning : ''} ${isSelected ? styles.techCardSelected : ''}`}
                     onClick={() => handleSkillClick(skill.name)}
                     initial={{ opacity: 0, scale: 0.92 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -147,7 +165,7 @@ export default function Skills({ selectedSkill, onSelectSkill }) {
                     <span className={styles.techName} style={{ opacity: isSelected ? 1 : opacity }}>
                       {skill.name}
                     </span>
-                    <span className={styles.techLevel}>{levelLabel(skill.level)}</span>
+                    <span className={styles.techLevel}>{tierLabel(skill.tier)}</span>
                   </motion.button>
                 );
               })}
