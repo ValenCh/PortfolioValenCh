@@ -1,71 +1,126 @@
 .about {}
 
-.grid {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 4rem;
-  align-items: start;
+/* ── Layout principal: bio + columna de stats (flexbox) ── */
+.bentoGrid {
+  display: flex;
+  align-items: stretch;
+  gap: 1.25rem;
 }
 
+/* ── Bloque base ── */
+.bentoBlock {
+  background: var(--bg-card);
+  border: 1px solid var(--border-premium);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+.bentoBlock::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.03) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+.bentoBlock:hover {
+  border-color: var(--border-premium-hover);
+}
+
+/* ── Bio — más ancho, y ya no depende de la altura de los stats ── */
+.blockBio {
+  flex: 0.5 0 46%;
+  padding: 3rem 2.5rem 3.5rem;
+}
+
+/* ── Columna de stats — vertical, ocupa la altura del bio ── */
+.statsGrid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.statCard {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1.75rem;
+  cursor: default;
+}
+
+/* ── Interior de stat card — número y etiqueta en fila, fácil de escanear ── */
+.statInner {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.statNum {
+  font-family: var(--font-head);
+  font-size: clamp(1.7rem, 2.6vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  color: var(--text2);
+  line-height: 1.4;
+  font-weight: 300;
+}
+
+/* ── Bio text ── */
 .bio {
   color: var(--text2);
   line-height: 1.85;
   margin-bottom: 1rem;
   font-weight: 300;
+  font-size: 0.95rem;
 }
 
+/* ── Location ── */
 .location {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
   color: var(--text3);
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  margin-top: 0.75rem;
+  letter-spacing: 0.02em;
 }
 
-.right {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .bentoGrid {
+    flex-direction: column;
+  }
+  .blockBio {
+    flex-basis: auto;
+    width: 100%;
+  }
+  .statsGrid {
+    width: 100%;
+  }
 }
 
-.statCard {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem 1.25rem;
-  cursor: default;
-
-  /* FIX: la transición del borde la maneja CSS directamente.
-     var(--transition) = 0.22s — rápido y sigue al ratón al instante. */
-  transition: border-color var(--transition);
-}
-
-.statCard:hover {
-  border-color: var(--border-hover);
-}
-
-.statNum {
-  font-family: var(--font-head);
-  font-size: 2.25rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--text);
-  line-height: 1;
-  margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, var(--text), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.statLabel {
-  font-size: 0.78rem;
-  color: var(--text3);
-  line-height: 1.4;
-}
-
-@media (max-width: 768px) {
-  .grid { grid-template-columns: 1fr; gap: 2.5rem; }
+@media (max-width: 560px) {
+  .statsGrid {
+    gap: 0.6rem;
+  }
+  .statCard {
+    padding: 1.1rem 1.4rem;
+    justify-content: flex-start;
+  }
 }

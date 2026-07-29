@@ -29,9 +29,19 @@ node_modules/
 .env
 .env.local
 .env.production
+.env*.local
 
 # Build
 dist/
 
 # Editor
 .DS_Store
+
+repomix-output.xml
+
+#firebase 
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.runtimeconfig.json

@@ -1,12 +1,14 @@
 import { motion } from 'framer-motion';
-import { experience } from '../../data/portfolioData';
+import { usePortfolioData } from '../../data/portfolioData';
 import SectionTitle from '../ui/SectionTitle';
 import styles from './Experience.module.css';
 
 export default function Experience() {
+  const { experience, ui } = usePortfolioData();
+
   return (
     <section id="experience" className={`section ${styles.experience}`}>
-      <SectionTitle tag="// experiencia" title="Mi trayectoria" />
+      <SectionTitle tag={ui.experience.tag} title={ui.experience.title} />
       <div className={styles.timeline}>
         {experience.map((item, i) => (
           <motion.div
@@ -24,9 +26,7 @@ export default function Experience() {
               <p className={styles.company}>{item.company}</p>
               <p className={styles.desc}>{item.description}</p>
               <div className={styles.tags}>
-                {item.tags.map((t) => (
-                  <span key={t} className={styles.tag}>{t}</span>
-                ))}
+                {item.tags.map((t) => <span key={t} className={styles.tag}>{t}</span>)}
               </div>
             </div>
           </motion.div>
