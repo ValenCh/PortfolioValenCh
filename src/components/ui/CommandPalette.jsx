@@ -17,11 +17,7 @@ export default function CommandPalette({ open, setOpen, selectedSkill, onClearSk
 
   useEffect(() => {
     function onKeyDown(e) {
-      const isK = e.key === 'k' || e.key === 'K';
-      if ((e.metaKey || e.ctrlKey) && isK) {
-        e.preventDefault();
-        setOpen((prev) => !prev);
-      } else if (e.key === 'Escape' && open) {
+      if (e.key === 'Escape' && open) {
         setOpen(false);
       }
     }

@@ -15,6 +15,7 @@ export default function Footer() {
         <div className={styles.links}>
           <a href={personal.github} target="_blank" rel="noreferrer" className={styles.link}>GitHub</a>
           <a href={personal.linkedin} target="_blank" rel="noreferrer" className={styles.link}>LinkedIn</a>
+          <a href={`mailto:${personal.email}`} className={styles.link}>Email</a>
         </div>
       </div>
     </footer>

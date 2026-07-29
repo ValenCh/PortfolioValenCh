@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 import emailjs from '@emailjs/browser';
-import { auth, provider } from '../../firebase';
+import { loadFirebaseAuth } from '../../firebase';
+import { useReveal } from '../../hooks/useInView';
 import { usePortfolioData } from '../../data/portfolioData';
 import { useSoundEffects } from '../../hooks/useSoundEffects';
 import SectionTitle from '../ui/SectionTitle';
@@ -48,6 +48,11 @@ export default function Contact() {
   const { playClick } = useSoundEffects();
   const formRef = useRef(null);
 
+  // Dispara la carga de Firebase Auth ~600px antes de que la sección sea
+  // visible, para que al llegar el usuario scrolleando ya esté resuelto.
+  const { ref: sectionRef, inView: nearContact } = useReveal({ rootMargin: '600px 0px', triggerOnce: true });
+  const [authApi, setAuthApi] = useState(null);
+
   const [user, setUser]               = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [signing, setSigning]         = useState(false);
@@ -56,7 +61,7 @@ export default function Contact() {
   const [error, setError]             = useState(false);
 
   const contactLinks = [
-    /*{
+    {
       id: 'email',
       label: personal.email,
       href: `mailto:${personal.email}`,
@@ -67,7 +72,7 @@ export default function Contact() {
           <polyline points="22,6 12,13 2,6" />
         </svg>
       ),
-    },*/
+    },
     {
       id: 'linkedin',
       label: 'linkedin.com/in/valentino',
@@ -93,13 +98,24 @@ export default function Contact() {
     },
   ];
 
+  // Se dispara solo cuando la sección se acerca al viewport.
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setAuthLoading(false);
+    if (!nearContact) return;
+    let cancelled = false;
+    let unsub;
+    loadFirebaseAuth().then((api) => {
+      if (cancelled) return;
+      setAuthApi(api);
+      unsub = api.onAuthStateChanged(api.auth, (currentUser) => {
+        setUser(currentUser);
+        setAuthLoading(false);
+      });
     });
-    return () => unsub();
-  }, []);
+    return () => {
+      cancelled = true;
+      if (unsub) unsub();
+    };
+  }, [nearContact]);
 
   useEffect(() => {
     if (!sent) return;
@@ -114,10 +130,11 @@ export default function Contact() {
   }, [error]);
 
   async function handleGoogleLogin() {
+    if (!authApi) return;
     playClick();
     setSigning(true);
     try {
-      await signInWithPopup(auth, provider);
+      await authApi.signInWithPopup(authApi.auth, authApi.provider);
     } catch (err) {
       console.error('Auth error:', err);
     } finally {
@@ -126,8 +143,9 @@ export default function Contact() {
   }
 
   async function handleLogout() {
+    if (!authApi) return;
     playClick();
-    await signOut(auth);
+    await authApi.signOut(authApi.auth);
     formRef.current?.reset();
     setSent(false);
   }
@@ -150,7 +168,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className={`section ${styles.contact}`}>
+    <section id="contact" className={`section ${styles.contact}`} ref={sectionRef}>
       <div className={styles.wrapper}>
         <motion.div
           className={styles.left}
@@ -226,7 +244,7 @@ export default function Contact() {
                 <p className={styles.authTitle}>{ui.contact.authTitle}</p>
                 <p className={styles.authHint}>{ui.contact.authHint}</p>
 
-                <button className={styles.googleBtn} onClick={handleGoogleLogin} disabled={signing}>
+                <button className={styles.googleBtn} onClick={handleGoogleLogin} disabled={signing || !authApi}>
                   <GoogleIcon />
                   {signing ? ui.contact.googleBtnLoading : ui.contact.googleBtn}
                 </button>

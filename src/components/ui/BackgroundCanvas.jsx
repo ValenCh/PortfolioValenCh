@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 
-const PARTICLE_COUNT = 50;
 const CONNECT_DIST = 120;
 const MOUSE_RADIUS = 140;
+const MOBILE_BREAKPOINT = 768;
 
 function rand(min, max) {
   return Math.random() * (max - min) + min;
@@ -34,9 +34,11 @@ export default function BackgroundCanvas() {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
     function resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
+      const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 2);
       const width = window.innerWidth;
       const height = window.innerHeight;
       sizeRef.current = { width, height };
@@ -48,7 +50,9 @@ export default function BackgroundCanvas() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const target = Math.round((width * height) / 22000) + 40;
-      const count = Math.max(40, Math.min(60, target));
+      const minCount = isMobile ? 24 : 40;
+      const maxCount = isMobile ? 34 : 60;
+      const count = Math.max(minCount, Math.min(maxCount, target));
       particlesRef.current = createParticles(count, width, height);
     }
 
@@ -58,6 +62,15 @@ export default function BackgroundCanvas() {
 
     function handleMouseLeave() {
       mouseRef.current = { x: -9999, y: -9999 };
+    }
+
+    function handleVisibilityChange() {
+      if (document.hidden) {
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      } else if (!prefersReduced && !rafRef.current) {
+        rafRef.current = requestAnimationFrame(tick);
+      }
     }
 
     function drawFrame() {
@@ -130,13 +143,17 @@ export default function BackgroundCanvas() {
     if (prefersReduced) {
       drawFrame();
     } else {
-      window.addEventListener('mousemove', handleMouseMove, { passive: true });
-      window.addEventListener('mouseleave', handleMouseLeave);
+      if (!isCoarsePointer) {
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+        window.addEventListener('mouseleave', handleMouseLeave);
+      }
+      document.addEventListener('visibilitychange', handleVisibilityChange);
       rafRef.current = requestAnimationFrame(tick);
     }
 
     return () => {
       resizeObserver.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
